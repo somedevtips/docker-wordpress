@@ -1,6 +1,13 @@
 services:
   wordpress:
-    build: ./config
+    build:
+      dockerfile: config/Dockerfile
+      context: .
+      args:
+        HOST_USER_NAME: ${HOST_USER_NAME}
+        HOST_USER_ID: ${HOST_USER_ID}
+        HOST_GROUP_NAME: ${HOST_GROUP_NAME}
+        HOST_GROUP_ID: ${HOST_GROUP_ID}
     ports:
       - 80:80
     extra_hosts:
@@ -11,6 +18,8 @@ services:
       WORDPRESS_DB_PASSWORD: dbpassword
       WORDPRESS_DB_NAME: wordpress
       WORDPRESS_DEBUG: '1'
+      APACHE_RUN_USER: ${HOST_USER_NAME}
+      APACHE_RUN_GROUP: ${HOST_GROUP_NAME}
     volumes:
       - ./public:/var/www/html
     depends_on:
