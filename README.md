@@ -1,14 +1,23 @@
 # Docker WordPress
-Docker setup for WordPress, with WP CLI, Xdebug, Composer, Adminer
+Docker setup for WordPress, with WP CLI, Xdebug, Composer, Adminer.  
+The Apache webserver is run with the same user as the host user to allow you modifying the WordPress files in your host 
+without permission issues (the default image runs Apache with the `www-data` user, so your host user doesn't have the 
+rights to change the files and WordPress can only be managed through its interface).
 
 ## Setup
-1. Customize Apache virtual host configuration in file `config/apache/wordpress-site.conf`, if needed  
-2. Customize Xdebug configuration in file `config/php/xdebug.ini`, if needed
-3. Customize PHP configuration in file `config/php/zcustom.ini`, if needed
-4. Run `docker-compose up -d`, it will build the docker images and start the containers
-5. Visit [http://localhost](http://localhost) and install WordPress, the username and 
-password of the Administrator are `admin`
-6. The WordPress files are mapped to the `public` directory
+The following instructions are for the Linux operating system.  
+1. get the id, the group and the group id of your current Linux user,
+   for example if your current user is `giancarlo` the commands are:  
+   get the user id: `id -u giancarlo`  
+   get the group name: `id -gn giancarlo`  
+   get the group id: `id -g giancarlo`
+2. fill in the `.env` file with the information above
+3. Customize Apache virtual host configuration in file `config/apache/wordpress-site.conf`, if needed  
+4. Customize Xdebug configuration in file `config/php/xdebug.ini`, if needed
+5. Customize PHP configuration in file `config/php/zcustom.ini`, if needed
+6. Run `docker-compose up -d`, it will build the docker images and start the containers
+7. Visit [http://localhost](http://localhost) and install WordPress
+8. The WordPress files are mapped to the `public` directory
 
 ## Tools
 Adminer: [http://localhost:9999/](http://localhost:9999/), the username and
